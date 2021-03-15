@@ -2,3 +2,8 @@
 CourseWork.Domain/obj/
 CourseWork.Domain/bin/Debug/net5.0/ref/CourseWork.Domain.dll
 CourseWork.Domain/bin/
+CourseWork.UI/obj/
+CourseWork.UI/bin/
+CourseWork.Data/obj/
+.idea/
+.vs/
