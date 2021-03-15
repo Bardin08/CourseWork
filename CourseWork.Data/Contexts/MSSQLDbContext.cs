@@ -2,6 +2,7 @@
 using CourseWork.Data.Abstractions;
 using CourseWork.Data.Configurations;
 using CourseWork.Domain.Models;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace CourseWork.Data.Contexts
@@ -13,6 +14,11 @@ namespace CourseWork.Data.Contexts
         public MssqlDbContext(string connectionString)
         {
             _connectionString = connectionString;
+        }
+
+        public MssqlDbContext(DbContextOptions options) 
+            : base(options)
+        {
         }
 
         public DbSet<UserModel> Users { get; set; }

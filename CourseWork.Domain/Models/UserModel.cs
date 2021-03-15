@@ -1,6 +1,4 @@
-﻿using CourseWork.Domain.Models.Enums;
-
-namespace CourseWork.Domain.Models
+﻿namespace CourseWork.Domain.Models
 {
     public class UserModel
     {
@@ -19,12 +17,5 @@ namespace CourseWork.Domain.Models
         /// User last name
         /// </summary>
         public string LastName { get; set; }
-        /// <summary>
-        /// User role
-        /// </summary>
-        /// <remarks>
-        /// Represented by a <see cref="UserRole"/>
-        /// </remarks>
-        public UserRole Role { get; set; }
     }
 }
