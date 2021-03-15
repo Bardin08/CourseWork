@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CourseWork.Data.Contexts
 {
-    public class MssqlDbContext : DbContext, IDbContext
+    public class MssqlDbContext : DbContext
     {
         private readonly string _connectionString;
 
@@ -17,16 +17,6 @@ namespace CourseWork.Data.Contexts
 
         public DbSet<UserModel> Users { get; set; }
         public DbSet<BookModel> Books { get; set; }
-
-        public async Task<int> SaveChangesAsync()
-        {
-            return await base.SaveChangesAsync();
-        }
-
-        public void Update<TEntity>(TEntity entity) where TEntity : class
-        {
-            base.Update(entity);
-        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
