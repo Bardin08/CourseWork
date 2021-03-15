@@ -11,7 +11,7 @@ namespace CourseWork.Data.Contexts
     {
         private readonly string _connectionString;
 
-        public MssqlDbContext(string connectionString)
+        /*public MssqlDbContext(string connectionString)
         {
             _connectionString = connectionString;
         }
@@ -19,14 +19,14 @@ namespace CourseWork.Data.Contexts
         public MssqlDbContext(DbContextOptions options) 
             : base(options)
         {
-        }
+        }*/
 
         public DbSet<UserModel> Users { get; set; }
         public DbSet<BookModel> Books { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(_connectionString);
+            optionsBuilder.UseSqlServer("Server=WIN-SOHQVE513ER\\SQLEXPRESS;Database=LibraryDb;Integrated Security=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
