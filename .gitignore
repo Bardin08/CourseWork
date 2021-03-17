@@ -8,3 +8,8 @@ CourseWork.Data/obj/
 .idea/
 .vs/
 CourseWork.Data/bin/
+*.db
+obj/
+CourseWork.Shared/bin/
+CourseWork.LogicLayer/bin/
+*.json

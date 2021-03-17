@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <Nullable>disable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CourseWork.Data\CourseWork.Data.csproj" />
+      <ProjectReference Include="..\CourseWork.Shared\CourseWork.Shared.csproj" />
+    </ItemGroup>
+
+</Project>
