@@ -18,7 +18,7 @@ namespace CourseWork.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.4")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("CourseWork.Domain.Models.BookModel", b =>
+            modelBuilder.Entity("CourseWork.Shared.Models.BookModel", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -53,7 +53,7 @@ namespace CourseWork.Data.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("CourseWork.Domain.Models.KeyWordModel", b =>
+            modelBuilder.Entity("CourseWork.Shared.Models.KeyWordModel", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -75,7 +75,7 @@ namespace CourseWork.Data.Migrations
                     b.ToTable("KeyWordModel");
                 });
 
-            modelBuilder.Entity("CourseWork.Domain.Models.UserModel", b =>
+            modelBuilder.Entity("CourseWork.Shared.Models.UserModel", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -97,23 +97,23 @@ namespace CourseWork.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("CourseWork.Domain.Models.BookModel", b =>
+            modelBuilder.Entity("CourseWork.Shared.Models.BookModel", b =>
                 {
-                    b.HasOne("CourseWork.Domain.Models.UserModel", "Author")
+                    b.HasOne("CourseWork.Shared.Models.UserModel", "Author")
                         .WithMany()
                         .HasForeignKey("AuthorId");
 
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("CourseWork.Domain.Models.KeyWordModel", b =>
+            modelBuilder.Entity("CourseWork.Shared.Models.KeyWordModel", b =>
                 {
-                    b.HasOne("CourseWork.Domain.Models.BookModel", null)
+                    b.HasOne("CourseWork.Shared.Models.BookModel", null)
                         .WithMany("KeyWords")
                         .HasForeignKey("BookModelId");
                 });
 
-            modelBuilder.Entity("CourseWork.Domain.Models.BookModel", b =>
+            modelBuilder.Entity("CourseWork.Shared.Models.BookModel", b =>
                 {
                     b.Navigation("KeyWords");
                 });
