@@ -1,0 +1,83 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using CourseWork.Domain.Dtos
+@using CourseWork.Domain.Enums
+
+<EditForm Model="@BookSearchingDto" OnValidSubmit="@ValidationSuccessHandler">
+  <DataAnnotationsValidator />
+  <ValidationSummary />
+  
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label>Book name</label>
+      <InputText DisplayName="Book Name" @bind-Value="BookSearchingDto.BookName" class="form-control" placeholder="Enter book name.."/>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label>Author</label>
+      <InputText DisplayName="Author" @bind-Value="BookSearchingDto.AuthorName" class="form-control" placeholder="Enter author name.."/>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label>Publish Year</label>
+      <InputNumber DisplayName="Publish Year" @bind-Value="BookSearchingDto.PublishYear" class="form-control" placeholder="Enter author name.."/>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-8 mb-3">
+      <label>Key Words</label>
+      <InputText DisplayName="Key Words" @bind-Value="BookSearchingDto.KeyWords" class="form-control" placeholder="Enter author name.."/>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label>ISBN</label>
+      <InputText DisplayName="ISBN" @bind-Value="BookSearchingDto.Isbn" class="form-control" placeholder="Enter author name.."/>
+    </div>
+  </div>
+  <div class="align-items-center col-md-4">
+    <h3> Search by: </h3>
+    @if (BookSearchingDto.Isbn?.Length > 0)
+    {
+      <label>By ISBN: </label>
+      <InputCheckbox @bind-Value="@BookSearchingDto.SearchByIsbn"/>
+      <br>
+    }
+
+    @if (BookSearchingDto.AuthorName?.Length > 0)
+    {
+      <label>By author: </label>
+      <InputCheckbox @bind-Value="@BookSearchingDto.SearchByAuthor"/>
+      <br>
+    }
+    
+    @if (BookSearchingDto.KeyWords?.Length > 0)
+    {
+      <label>By key words: </label>
+      <InputCheckbox @bind-Value="@BookSearchingDto.SearchByKeyWords"/>
+      <br>
+    }
+    
+    @if (BookSearchingDto.BookName?.Length > 0)
+    {
+      <label>By book name: </label>
+      <InputCheckbox @bind-Value="@BookSearchingDto.SearchByName"/>
+      <br>                                                            
+    }
+    
+    @if (BookSearchingDto.PublishYear != 0)
+    {
+      <label>By publish year: </label>
+      <InputCheckbox @bind-Value="@BookSearchingDto.SearchByPublishYear"/>
+      <br>
+    }
+  </div>
+  <div class="align-content-center">
+    <button class="btn btn-success  col-md-4" type="submit">Find</button>
+  </div>
+</EditForm>
+    
+@code {
+
+  [Required]
+  [Parameter]
+  public BookSearchingDto BookSearchingDto { get; set; }
+
+  [Parameter]
+  public Action ValidationSuccessHandler { get; set; }
+}
