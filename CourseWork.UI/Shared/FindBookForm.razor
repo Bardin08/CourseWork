@@ -1,6 +1,5 @@
 ﻿@using System.ComponentModel.DataAnnotations
-@using CourseWork.Domain.Dtos
-@using CourseWork.Domain.Enums
+@using CourseWork.Shared.Dtos
 
 <EditForm Model="@BookSearchingDto" OnValidSubmit="@ValidationSuccessHandler">
   <DataAnnotationsValidator />
@@ -17,21 +16,21 @@
     </div>
     <div class="col-md-4 mb-3">
       <label>Publish Year</label>
-      <InputNumber DisplayName="Publish Year" @bind-Value="BookSearchingDto.PublishYear" class="form-control" placeholder="Enter author name.."/>
+      <InputNumber DisplayName="Publish Year" @bind-Value="BookSearchingDto.PublishYear" class="form-control" placeholder="Enter publish year.."/>
     </div>
   </div>
   <div class="form-row">
     <div class="col-md-8 mb-3">
       <label>Key Words</label>
-      <InputText DisplayName="Key Words" @bind-Value="BookSearchingDto.KeyWords" class="form-control" placeholder="Enter author name.."/>
+      <InputText DisplayName="Key Words" @bind-Value="BookSearchingDto.KeyWords" class="form-control" placeholder="Enter keywords.."/>
     </div>
     <div class="col-md-4 mb-3">
       <label>ISBN</label>
-      <InputText DisplayName="ISBN" @bind-Value="BookSearchingDto.Isbn" class="form-control" placeholder="Enter author name.."/>
+      <InputText DisplayName="ISBN" @bind-Value="BookSearchingDto.Isbn" class="form-control" placeholder="Enter ISBN.."/>
     </div>
   </div>
   <div class="align-items-center col-md-4">
-    <h3> Search by: </h3>
+    <h3> Searching criteria: </h3>
     @if (BookSearchingDto.Isbn?.Length > 0)
     {
       <label>By ISBN: </label>
