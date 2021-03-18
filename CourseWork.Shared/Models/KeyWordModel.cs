@@ -1,4 +1,4 @@
-﻿namespace CourseWork.Domain.Models
+﻿namespace CourseWork.Shared.Models
 {
     public class KeyWordModel
     {
