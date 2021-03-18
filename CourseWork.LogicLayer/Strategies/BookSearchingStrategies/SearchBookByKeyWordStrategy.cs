@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CourseWork.Domain.Dtos;
-using CourseWork.Domain.Models;
+using CourseWork.Shared.Dtos;
+using CourseWork.Shared.Models;
 
 namespace CourseWork.LogicLayer.Strategies.BookSearchingStrategies
 {
@@ -14,17 +14,11 @@ namespace CourseWork.LogicLayer.Strategies.BookSearchingStrategies
 
             var books = new List<BookModel>();
             
-            /* Do not change the order of cycles! 
-             * This variant is the best possible.
-             *
-             * If we find a word in the book we'll move to a next book
-             * else we'll move to the next word for the current book
-             */
-            foreach (var keyWord in keyWords)
+            foreach (var book in allBooks)
             {
-                foreach (var book in allBooks)
+                foreach (var keyWord in keyWords)
                 {
-                    if (books.Contains(book)) continue;
+                    if (books.Contains(book)) break;
                     if (book.KeyWords.Any(word => 
                         word.Word.Contains(keyWord, StringComparison.InvariantCultureIgnoreCase)))
                     {

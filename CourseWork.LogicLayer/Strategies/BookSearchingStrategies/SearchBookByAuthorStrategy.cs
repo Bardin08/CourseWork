@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using CourseWork.Domain.Dtos;
-using CourseWork.Domain.Models;
+using CourseWork.Shared.Dtos;
+using CourseWork.Shared.Models;
 
 namespace CourseWork.LogicLayer.Strategies.BookSearchingStrategies
 {

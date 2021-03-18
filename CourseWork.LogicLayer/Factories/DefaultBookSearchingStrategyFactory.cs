@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using CourseWork.Domain.Dtos;
+using CourseWork.Shared.Dtos;
 using CourseWork.LogicLayer.Abstractions;
 using CourseWork.LogicLayer.Strategies.BookSearchingStrategies;
 
