@@ -19,7 +19,7 @@ namespace CourseWork.Data
         private static void AddDbContexts(this IServiceCollection serviceCollection,
             IConfiguration configuration)
         {
-            serviceCollection.AddDbContext<MssqlDbContext>(options =>
+            serviceCollection.AddDbContext<MssqlDbContext>(options => 
                 options.UseSqlServer(configuration.GetConnectionString("LibraryDb")));
             serviceCollection.AddDbContext<ApplicationIdentityDbContext>(options => 
                 options.UseSqlite(configuration.GetConnectionString("IdentityDb")));

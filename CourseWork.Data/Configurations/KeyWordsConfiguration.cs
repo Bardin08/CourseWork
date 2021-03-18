@@ -1,4 +1,4 @@
-﻿using CourseWork.Domain.Models;
+﻿using CourseWork.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

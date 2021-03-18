@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using CourseWork.Data.Abstractions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace CourseWork.Data.Repositories
 {
@@ -33,7 +34,7 @@ namespace CourseWork.Data.Repositories
                 : RepositoryContext.Set<TEntity>().AsNoTracking().Where(expression);
         }
 
-        public Task<TEntity> FindAsync(int entityId)
+        public Task<TEntity> FindAsync(string entityId)
         {
             return RepositoryContext.Set<TEntity>().FindAsync(entityId).AsTask();
         }
@@ -48,9 +49,9 @@ namespace CourseWork.Data.Repositories
             return RepositoryContext.Set<TEntity>().AddAsync(entity).AsTask();
         }
 
-        public void Update(TEntity entity)
+        public EntityEntry<TEntity> Update(TEntity entity)
         {
-            RepositoryContext.Set<TEntity>().Update(entity);
+            return RepositoryContext.Set<TEntity>().Update(entity);
         }
 
         public void Delete(TEntity entity)

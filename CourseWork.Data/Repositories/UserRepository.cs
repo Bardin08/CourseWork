@@ -1,6 +1,6 @@
 ﻿using CourseWork.Data.Abstractions;
 using CourseWork.Data.Contexts;
-using CourseWork.Domain.Models;
+using CourseWork.Shared.Models;
 
 namespace CourseWork.Data.Repositories
 {

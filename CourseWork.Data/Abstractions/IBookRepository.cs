@@ -1,4 +1,4 @@
-﻿using CourseWork.Domain.Models;
+﻿using CourseWork.Shared.Models;
 
 namespace CourseWork.Data.Abstractions
 {
