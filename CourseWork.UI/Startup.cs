@@ -25,7 +25,7 @@ namespace CourseWork.UI
         public void ConfigureServices(IServiceCollection services)
         {
             services.UseDataAccessLayer(Configuration);
-            services.UseLogicalLayer();
+            services.UseLogicLayer();
             
             services.AddDefaultIdentity<IdentityUser>(options => 
                 options.SignIn.RequireConfirmedAccount = true)

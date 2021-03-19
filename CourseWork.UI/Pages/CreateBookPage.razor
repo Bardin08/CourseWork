@@ -1,13 +1,11 @@
-﻿@page "/"
+﻿@page "/createbook"
+@using CourseWork.LogicLayer.Abstractions
 @using CourseWork.Shared.Dtos
 @using CourseWork.Shared.Models
-
-@using CourseWork.LogicLayer.Abstractions
 @using CourseWork.UI.Helpers
-
 @inject IBookActionProcessor BookActionProcessor
 
-<FindBookForm BookSearchingDto="@_bookSearchingDto" ValidationSuccessHandler="@FindBook"/>
+<CreateBookForm BookCreationDto="@_bookCreationDto" ValidationSuccessHandler="CreateBook"/>
 
 @if (_bookModels.Any())
 {
@@ -86,12 +84,6 @@
                     </div>
                     
                     <div class="form-row m-2">
-                        <input class="form-control col-md-12 m-1" type="text"
-                           placeholder="Keywords"
-                           @bind="_modifiableBook.KeyWords"/>
-                    </div>
-                    
-                    <div class="form-row m-2">
                         <textarea class="form-control col-md-12 m-1" type="text"
                            placeholder="Book description"
                            @bind="_modifiableBook.Description" maxlength="1024"></textarea>
@@ -107,55 +99,62 @@
     </div>
 }
 
+
 @code {
-    readonly BookSearchingDto _bookSearchingDto = new BookSearchingDto();
-    private List<BookModel> _bookModels = new List<BookModel>();
-    private bool _showPopUp;
-    private BookModel _modifiableBook;
-    
-    private async void FindBook()
-    {
-        _bookModels = (await BookActionProcessor.FindBooks(_bookSearchingDto)).ToList();
-    }
+	private BookCreationDto _bookCreationDto;
+	private List<BookModel> _bookModels = new List<BookModel>();
+	private bool _showPopUp;
+	private BookModel _modifiableBook;
 
-    private void EditBook(BookModel book)
-    {
-        _showPopUp = true;
-        _modifiableBook = book;
-    }
+	protected override async Task OnInitializedAsync()
+	{
+		await LoadAllBooks();
+	}
 
-    private void DeleteBook(BookModel book)
-    {
-        _bookModels.RemoveAll(b => b.Id == book.Id);
+	private async Task LoadAllBooks()
+	{
+		_bookModels = (await BookActionProcessor.FindAllBooks()).ToList();
+	}
+	
+	private async void CreateBook()
+	{
+		await BookActionProcessor.CreateBook(_bookCreationDto);
+	}
+	
+	private void EditBook(BookModel book)
+	{
+		_showPopUp = true;
+		_modifiableBook = book;
+	}
+
+	private void DeleteBook(BookModel book)
+	{
+		_bookModels.RemoveAll(b => b.Id == book.Id);
         
-    // TODO: call BookDeleteProvider from LogicLayer (requires method delete by ID)
-    // TODO: show confirmation form (maybe admin need to enter the book name to delete it)    
-    }
-    
-    private void ClosePopUp()
-    {
-        _showPopUp = false;
-        _modifiableBook = null;
-    }
+	// TODO: call BookDeleteProvider from LogicLayer (requires method delete by ID)
+	// TODO: show confirmation form (maybe admin need to enter the book name to delete it)    
+	}
+	private void ClosePopUp()
+	{
+		_showPopUp = false;
+	}
 
-    private async void SaveModifiedBook()
-    {
-        var updatedBookIndex = _bookModels.IndexOf(_bookModels.Find(b => b.Id == _modifiableBook.Id));
-        _bookModels[updatedBookIndex] = _modifiableBook;
+	private async void SaveModifiedBook()
+	{
+		var updatedBookIndex = _bookModels.IndexOf(_bookModels.Find(b => b.Id == _modifiableBook.Id));
+		_bookModels[updatedBookIndex] = _modifiableBook;
         
-        await BookActionProcessor.UpdateBookById(_modifiableBook.Id, new BookCreationDto
-        {
-            Id =  _modifiableBook.Id,
-            Author = _modifiableBook.Author,
-            Description = _modifiableBook.Description,
-            Isbn = _modifiableBook.ISBN,
-            BookName = _modifiableBook.Name,
-            PublishYear = _modifiableBook.PublishYear,
-            KeyWordModels = _modifiableBook.KeyWords
-        });
+		ClosePopUp();
 
-        ClosePopUp();
-
-    // TODO: call BookSavingProvider from LogicLayer (requires method update by ID)
-    }
+		await BookActionProcessor.UpdateBookById(_modifiableBook.Id, new BookCreationDto
+		{
+			Id = _modifiableBook.Id,
+			Author = _modifiableBook.Author,
+			Description = _modifiableBook.Description,
+			Isbn = _modifiableBook.ISBN,
+			BookName = _modifiableBook.Name,
+			PublishYear = _modifiableBook.PublishYear,
+			KeyWordModels = _modifiableBook.KeyWords
+		});
+	}
 }
