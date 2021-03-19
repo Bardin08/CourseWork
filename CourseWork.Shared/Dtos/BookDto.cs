@@ -16,7 +16,7 @@ namespace CourseWork.Shared.Dtos
         [StringLength(17, MinimumLength = 1, ErrorMessage = "ISBN can`t be shorter that 1 symbol or longer than 17")]
         public string Isbn { get; set; }
         public string KeyWordsString { get; set; }
-        public UserModel Author { get; set; }
+        public AuthorModel Author { get; set; }
         
         [MaxLength(1024, ErrorMessage = "Description can`t be longer than 1024 characters")]
         public string Description { get; set; }

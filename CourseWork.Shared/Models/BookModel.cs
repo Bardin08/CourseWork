@@ -27,9 +27,9 @@ namespace CourseWork.Shared.Models
         /// Book author
         /// </summary>
         /// <remarks>
-        /// Represented by <see cref="UserModel"/>
+        /// Represented by <see cref="AuthorModel"/>
         /// </remarks>
-        public UserModel Author { get; set; }
+        public AuthorModel Author { get; set; }
         /// <summary>
         /// Book publish year
         /// </summary>

@@ -7,7 +7,7 @@ namespace CourseWork.Shared.Helpers
 {
     public static class MappingHelper
     {
-        public static AuthorDto AuthorModelToAuthorDto(this UserModel authorModel)
+        public static AuthorDto AuthorModelToAuthorDto(this AuthorModel authorModel)
         {
             return new AuthorDto
             {
@@ -17,9 +17,9 @@ namespace CourseWork.Shared.Helpers
             };
         }
         
-        public static UserModel AuthorDtoToUserModel(this AuthorDto authorDto)
+        public static AuthorModel AuthorDtoToUserModel(this AuthorDto authorDto)
         {
-            return new UserModel
+            return new AuthorModel
             {
                 Id = authorDto.Id,
                 FirstName = authorDto.FirstName,

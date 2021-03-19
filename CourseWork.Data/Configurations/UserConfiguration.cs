@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CourseWork.Data.Configurations
 {
-    public class UserConfiguration : IEntityTypeConfiguration<UserModel>
+    public class UserConfiguration : IEntityTypeConfiguration<AuthorModel>
     {
-        public void Configure(EntityTypeBuilder<UserModel> builder)
+        public void Configure(EntityTypeBuilder<AuthorModel> builder)
         {
             builder.HasKey(userModel => userModel.Id).HasName("user_pkey");
             builder.Property(userModel => userModel.Id).HasColumnName("user_id");

@@ -22,7 +22,7 @@ namespace CourseWork.LogicLayer.Processors
 
         public async Task CreateAuthor(AuthorDto authorDto)
         {
-            var userRepository = new UserRepository(_contextFactory.CreateDbContext());
+            var userRepository = new AuthorRepository(_contextFactory.CreateDbContext());
             await userRepository.CreateAsync(authorDto.AuthorDtoToUserModel());
             await userRepository.SaveChangesAsync();
             userRepository.Dispose();
@@ -31,15 +31,15 @@ namespace CourseWork.LogicLayer.Processors
 
         public async Task UpdateAuthorById(string authorId, AuthorDto authorDto)
         {
-            var userRepository = new UserRepository(_contextFactory.CreateDbContext());
+            var userRepository = new AuthorRepository(_contextFactory.CreateDbContext());
             userRepository.Update(authorDto.AuthorDtoToUserModel());
             await userRepository.SaveChangesAsync();
             userRepository.Dispose();
         }
 
-        public async Task<UserModel> GetAuthorById(string authorId)
+        public async Task<AuthorModel> GetAuthorById(string authorId)
         {
-            var userRepository = new UserRepository(_contextFactory.CreateDbContext());
+            var userRepository = new AuthorRepository(_contextFactory.CreateDbContext());
             var author = await userRepository.FindByCondition(a => a.Id == authorId)
                 .FirstOrDefaultAsync();
             userRepository.Dispose();
@@ -51,9 +51,9 @@ namespace CourseWork.LogicLayer.Processors
             return author;
         }
         
-        public async Task<IEnumerable<UserModel>> GetAllAuthors()
+        public async Task<IEnumerable<AuthorModel>> GetAllAuthors()
         {
-            var userRepository = new UserRepository(_contextFactory.CreateDbContext());
+            var userRepository = new AuthorRepository(_contextFactory.CreateDbContext());
             var authors = await userRepository.FindAll().ToListAsync(); 
             userRepository.Dispose();
 

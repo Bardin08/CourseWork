@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CourseWork.Data.Repositories
 {
-    public class UserRepository : RepositoryBase<UserModel, MssqlDbContext>, IUserRepository
+    public class AuthorRepository : RepositoryBase<AuthorModel, MssqlDbContext>, IAuthorRepository
     {
-        public UserRepository(MssqlDbContext context) : base(context)
+        public AuthorRepository(MssqlDbContext context) : base(context)
         {
         }
     }

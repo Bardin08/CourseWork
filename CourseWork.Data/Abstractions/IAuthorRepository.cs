@@ -2,7 +2,7 @@
 
 namespace CourseWork.Data.Abstractions
 {
-    public interface IUserRepository : IRepositoryBase<UserModel>
+    public interface IAuthorRepository : IRepositoryBase<AuthorModel>
     {
     }
 }

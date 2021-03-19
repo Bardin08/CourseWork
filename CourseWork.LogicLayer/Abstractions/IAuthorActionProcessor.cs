@@ -9,7 +9,7 @@ namespace CourseWork.LogicLayer.Abstractions
     {
         Task CreateAuthor(AuthorDto authorDto);
         Task UpdateAuthorById(string authorId, AuthorDto authorDto);
-        Task<UserModel> GetAuthorById(string authorId);
-        Task<IEnumerable<UserModel>> GetAllAuthors();
+        Task<AuthorModel> GetAuthorById(string authorId);
+        Task<IEnumerable<AuthorModel>> GetAllAuthors();
     }
 }

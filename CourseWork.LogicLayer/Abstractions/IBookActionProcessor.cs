@@ -7,9 +7,9 @@ namespace CourseWork.LogicLayer.Abstractions
 {
     public interface IBookActionProcessor
     {
-        Task CreateBook(BookCreationDto bookCreationDto);
+        Task CreateBook(BookDto bookDto);
         Task RemoveBookById(string bookId);
-        Task UpdateBookById(string bookId, BookCreationDto bookCreationDto);
+        Task UpdateBookById(string bookId, BookDto bookDto);
         Task<IEnumerable<BookModel>> FindBooks(BookSearchingDto bookSearchingDto);
         Task<IEnumerable<BookModel>> FindAllBooks();
     }

@@ -7,7 +7,7 @@ using CourseWork.Shared.Dtos;
 using CourseWork.Shared.Models;
 using CourseWork.LogicLayer.Abstractions;
 using CourseWork.LogicLayer.Factories;
-using CourseWork.LogicLayer.Helpers;
+using CourseWork.Shared.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace CourseWork.LogicLayer.Processors
@@ -15,18 +15,17 @@ namespace CourseWork.LogicLayer.Processors
     public class DefaultBookActionProcessor : IBookActionProcessor
     {
         private readonly IDbContextFactory<MssqlDbContext> _contextFactory;
-        // TODO: Try to extract context creation and disposing from methods. 
+
         public DefaultBookActionProcessor(IDbContextFactory<MssqlDbContext> contextFactory)
         {
             _contextFactory = contextFactory;
         }
 
-        public async Task CreateBook(BookCreationDto bookCreationDto)
+        public async Task CreateBook(BookDto bookDto)
         {
             var bookRepository = new BookRepository(_contextFactory.CreateDbContext());
-            
-            await bookRepository.CreateAsync(bookCreationDto.BookModelFromBookCreationDto());
-            
+            await bookRepository.CreateAsync(bookDto.BookModelFromBookDto());
+            await bookRepository.SaveChangesAsync();
             bookRepository.Dispose();
         }
 
@@ -37,12 +36,14 @@ namespace CourseWork.LogicLayer.Processors
             var modelToDelete = await bookRepository
                 .FindByCondition(b => b.Id == bookId, false)
                 .FirstOrDefaultAsync();
+            
             bookRepository.Delete(modelToDelete);
+            await bookRepository.SaveChangesAsync();
             
             bookRepository.Dispose();
         }
 
-        public async Task UpdateBookById(string bookId, BookCreationDto bookCreationDto)
+        public async Task UpdateBookById(string bookId, BookDto bookDto)
         {
             var bookRepository = new BookRepository(_contextFactory.CreateDbContext());
             
@@ -52,7 +53,7 @@ namespace CourseWork.LogicLayer.Processors
 
             if (modelToUpdate == null) return;
 
-            modelToUpdate = bookCreationDto.BookModelFromBookCreationDto();
+            modelToUpdate = bookDto.BookModelFromBookDto();
 
             bookRepository.Update(modelToUpdate);
             await bookRepository.SaveChangesAsync();

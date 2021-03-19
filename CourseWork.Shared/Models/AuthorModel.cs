@@ -1,6 +1,6 @@
 ﻿namespace CourseWork.Shared.Models
 {
-    public class UserModel
+    public class AuthorModel
     {
         /// <summary>
         /// User model unique identifier 

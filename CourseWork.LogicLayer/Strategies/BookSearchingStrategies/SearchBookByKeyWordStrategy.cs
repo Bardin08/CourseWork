@@ -10,7 +10,7 @@ namespace CourseWork.LogicLayer.Strategies.BookSearchingStrategies
     {
         public IQueryable<BookModel> Execute(IQueryable<BookModel> allBooks, BookSearchingDto bookSearchingDto)
         {
-            var keyWords = bookSearchingDto.KeyWords.Replace(",", "").Split(" ");
+            var keyWords = bookSearchingDto.KeyWordsString.Replace(",", "").Split(" ");
 
             var books = new List<BookModel>();
             

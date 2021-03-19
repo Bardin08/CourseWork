@@ -77,7 +77,7 @@ namespace CourseWork.Data.Migrations
                     b.ToTable("KeyWordModel");
                 });
 
-            modelBuilder.Entity("CourseWork.Shared.Models.UserModel", b =>
+            modelBuilder.Entity("CourseWork.Shared.Models.AuthorModel", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -101,7 +101,7 @@ namespace CourseWork.Data.Migrations
 
             modelBuilder.Entity("CourseWork.Shared.Models.BookModel", b =>
                 {
-                    b.HasOne("CourseWork.Shared.Models.UserModel", "Author")
+                    b.HasOne("CourseWork.Shared.Models.AuthorModel", "Author")
                         .WithMany()
                         .HasForeignKey("AuthorId");
 

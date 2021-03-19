@@ -12,7 +12,7 @@ namespace CourseWork.Data.Contexts
         {
         }
 
-        public DbSet<UserModel> Users { get; set; }
+        public DbSet<AuthorModel> Users { get; set; }
         public DbSet<BookModel> Books { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
