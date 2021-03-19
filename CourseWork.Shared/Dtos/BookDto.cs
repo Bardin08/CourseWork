@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using CourseWork.Shared.Models;
 
 namespace CourseWork.Shared.Dtos
 {
-    public abstract class BookDto
+    public class BookDto
     {
         public string Id { get; set; }
         [Range(1920, 2021)] public int PublishYear { get; set; } = DateTime.Now.Year;
@@ -13,6 +15,13 @@ namespace CourseWork.Shared.Dtos
         public string AuthorName { get; set; }
         [StringLength(17, MinimumLength = 1, ErrorMessage = "ISBN can`t be shorter that 1 symbol or longer than 17")]
         public string Isbn { get; set; }
-        public string KeyWords { get; set; }
+        public string KeyWordsString { get; set; }
+        public UserModel Author { get; set; }
+        
+        [MaxLength(1024, ErrorMessage = "Description can`t be longer than 1024 characters")]
+        public string Description { get; set; }
+        
+        public List<KeyWordModel> KeyWordModels { get; set; }
+
     }
 }
