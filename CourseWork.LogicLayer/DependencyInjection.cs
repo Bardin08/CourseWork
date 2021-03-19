@@ -5,7 +5,7 @@ namespace CourseWork.LogicLayer
 {
     public static class DependencyInjection
     {
-        public static void UseLogicalLayer(this IServiceCollection serviceCollection)
+        public static void UseLogicLayer(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<Abstractions.IBookActionProcessor, DefaultBookActionProcessor>();
         }

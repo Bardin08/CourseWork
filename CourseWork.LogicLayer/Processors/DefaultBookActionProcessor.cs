@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CourseWork.Data.Abstractions;
+using CourseWork.Data.Contexts;
+using CourseWork.Data.Repositories;
 using CourseWork.Shared.Dtos;
 using CourseWork.Shared.Models;
 using CourseWork.LogicLayer.Abstractions;
@@ -13,27 +14,39 @@ namespace CourseWork.LogicLayer.Processors
 {
     public class DefaultBookActionProcessor : IBookActionProcessor
     {
-        private readonly IBookRepository _bookRepository;
-        private readonly IUserRepository _userRepository;
-
-        public DefaultBookActionProcessor(IBookRepository bookRepository, IUserRepository userRepository)
+        private readonly IDbContextFactory<MssqlDbContext> _contextFactory;
+        // TODO: Try to extract context creation and disposing from methods. 
+        public DefaultBookActionProcessor(IDbContextFactory<MssqlDbContext> contextFactory)
         {
-            _bookRepository = bookRepository;
-            _userRepository = userRepository;
+            _contextFactory = contextFactory;
+        }
+
+        public async Task CreateBook(BookCreationDto bookCreationDto)
+        {
+            var bookRepository = new BookRepository(_contextFactory.CreateDbContext());
+            
+            await bookRepository.CreateAsync(bookCreationDto.BookModelFromBookCreationDto());
+            
+            bookRepository.Dispose();
         }
 
         public async Task RemoveBookById(string bookId)
         {
-            var modelToDelete = await _bookRepository
+            var bookRepository = new BookRepository(_contextFactory.CreateDbContext());
+            
+            var modelToDelete = await bookRepository
                 .FindByCondition(b => b.Id == bookId, false)
                 .FirstOrDefaultAsync();
+            bookRepository.Delete(modelToDelete);
             
-            _bookRepository.Delete(modelToDelete);
+            bookRepository.Dispose();
         }
 
         public async Task UpdateBookById(string bookId, BookCreationDto bookCreationDto)
         {
-            var modelToUpdate = await _bookRepository
+            var bookRepository = new BookRepository(_contextFactory.CreateDbContext());
+            
+            var modelToUpdate = await bookRepository
                 .FindByCondition(b => b.Id == bookId, false)
                 .FirstOrDefaultAsync();
 
@@ -41,12 +54,16 @@ namespace CourseWork.LogicLayer.Processors
 
             modelToUpdate = bookCreationDto.BookModelFromBookCreationDto();
 
-            var t = _bookRepository.Update(modelToUpdate);
-            await _bookRepository.SaveChangesAsync();
+            bookRepository.Update(modelToUpdate);
+            await bookRepository.SaveChangesAsync();
+            
+            bookRepository.Dispose();
         }
 
         public async Task<IEnumerable<BookModel>> FindBooks(BookSearchingDto bookSearchingDto)
         {
+            var bookRepository = new BookRepository(_contextFactory.CreateDbContext());
+            
             if (bookSearchingDto == null || bookSearchingDto.SearchingCriteriaAmount == 0)
             {
                 return await Task.FromResult(System.Array.Empty<BookModel>());
@@ -55,7 +72,7 @@ namespace CourseWork.LogicLayer.Processors
             var searchingStrategies = new DefaultBookSearchingStrategyFactory()
                 .GetSearchingStrategies(bookSearchingDto).ToList();
 
-            var books = _bookRepository.FindAll(false)
+            var books = bookRepository.FindAll(false)
                 .Include(b => b.Author)
                 .Include(b => b.KeyWords).AsQueryable();
             
@@ -73,8 +90,16 @@ namespace CourseWork.LogicLayer.Processors
             }
             
             books.ToList().TrimExcess();
-            
+            bookRepository.Dispose();
             return books;
+        }
+
+        public Task<IEnumerable<BookModel>> FindAllBooks()
+        {
+            var bookRepository = new BookRepository(_contextFactory.CreateDbContext());
+            var allBooks = bookRepository.FindAll();
+            bookRepository.Dispose();
+            return Task.FromResult<IEnumerable<BookModel>>(allBooks.ToList());
         }
     }
 }
