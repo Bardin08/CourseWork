@@ -8,6 +8,7 @@ namespace CourseWork.LogicLayer
         public static void UseLogicLayer(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<Abstractions.IBookActionProcessor, DefaultBookActionProcessor>();
+            serviceCollection.AddScoped<Abstractions.IAuthorActionProcessor, DefaultAuthorActionProcessor>();
         }
     }
 }
