@@ -109,13 +109,13 @@ namespace CourseWork.Data.Migrations
             modelBuilder.Entity("CourseWork.Shared.Models.KeyWordModel", b =>
                 {
                     b.HasOne("CourseWork.Shared.Models.BookModel", null)
-                        .WithMany("KeyWords")
+                        .WithMany("KeyWordsString")
                         .HasForeignKey("BookModelId");
                 });
 
             modelBuilder.Entity("CourseWork.Shared.Models.BookModel", b =>
                 {
-                    b.Navigation("KeyWords");
+                    b.Navigation("KeyWordsString");
                 });
 #pragma warning restore 612, 618
         }
