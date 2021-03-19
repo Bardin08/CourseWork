@@ -3,9 +3,11 @@
 @using CourseWork.Shared.Models
 
 @using CourseWork.LogicLayer.Abstractions
+@using CourseWork.Shared.Helpers
 @using CourseWork.UI.Helpers
 
 @inject IBookActionProcessor BookActionProcessor
+@inject IAuthorActionProcessor AuthorActionProcessor
 
 <FindBookForm BookSearchingDto="@_bookSearchingDto" ValidationSuccessHandler="@FindBook"/>
 
@@ -38,7 +40,7 @@
                 <td>@book.ISBN</td>
                 <AuthorizeView Policy="@Policies.IsAdmin">
                     <td>
-                        <button class="btn btn-info m-2 w-auto" @onclick="() => EditBook(book)">Edit</button> <br> 
+                        <button class="btn btn-info m-2 w-auto" @onclick="() => ShowBookModificationPopUp(book)">Edit</button> <br> 
                         <button class="btn btn-danger m-2 w-auto" @onclick="() => DeleteBook(book)">Delete</button> <br> 
                     </td>
                 </AuthorizeView>
@@ -48,57 +50,92 @@
     </table>
 }
 
-@if (_showPopUp)
+@if (_showBookModificationPopUp)
 {
     <div class="modal" tabindex="-1" style="display:block" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title">Edit @_modifiableBook.Name</h3>
-                    <button type="button" class="close" @onclick="ClosePopUp">
+                    <h3 class="modal-title">Edit @_modifiableBook.BookName</h3>
+                    <button type="button" class="close" @onclick="HideBookModificationPopUp">
                         <span aria-hidden="true">X</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-row m-2">
                         <input class="form-control col-md-12 m-1" type="text"
-                           placeholder="Book name"
-                           @bind="_modifiableBook.Name"/>
+                               placeholder="Book name"
+                               @bind="_modifiableBook.BookName"/>
                     </div>
-
+    
                     <div class="form-row m-2">
                         <input class="form-control col-md-9 m-1" type="text"
                                placeholder="Author name"
                                @bind="_modifiableBook.Author.FirstName" readonly/>
+                        <button type="submit" class="btn btn-info col-md-2 m-1" @onclick="() => ShowAuthorModificationPopUp(_modifiableBook.Author)"> Edit </button>
+                    </div>
+                        
+                    <div class="form-row m-2">
+                        <input class="form-control col-md-12 m-1" type="text"
+                               placeholder="Publish year"
+                               @bind="_modifiableBook.PublishYear"/>
+                    </div>
+                        
+                    <div class="form-row m-2">
+                        <input class="form-control col-md-12 m-1" type="text"
+                               placeholder="ISBN"
+                               @bind="_modifiableBook.Isbn"/>
+                    </div>
+                        
+                    <div class="form-row m-2">
+                        <input class="form-control col-md-12 m-1" type="text"
+                               placeholder="Keywords"
+                               @bind="@_modifiableBook.KeyWordsString"/>
+                    </div>
+                        
+                    <div class="form-row m-2">
+                        <textarea class="form-control col-md-12 m-1" type="text"
+                               placeholder="Book description"
+                               @bind="_modifiableBook.Description" maxlength="1024"></textarea>
+                    </div>
+    
+                    <br/><br/>
+                    <button class="btn btn-primary" @onclick="SaveModifiedBook">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (_showAuthorModificationPopUp)
+{
+    <div class="modal" tabindex="-1" style="display:block" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Edit @_modifiableAuthor.FirstName @_modifiableAuthor.LastName</h3>
+                    <button type="button" class="close" @onclick="HideAuthorModificationPopUp">
+                        <span aria-hidden="true">X</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row m-2">
+                        <input class="form-control col-md-12 m-1" type="text"
+                            placeholder="Book name"
+                            @bind="@_modifiableAuthor.FirstName"/>
+                    </div>
+
+                    <div class="form-row m-2">
+                        <input class="form-control col-md-9 m-1" type="text"
+                            placeholder="Author name"
+                            @bind="@_modifiableAuthor.LastName"/>
                         <button type="submit" class="btn btn-info col-md-2 m-1"> Edit </button>
                     </div>
                     
-                    <div class="form-row m-2">
-                        <input class="form-control col-md-12 m-1" type="text"
-                           placeholder="Publish year"
-                           @bind="_modifiableBook.PublishYear"/>
-                    </div>
-                    
-                    <div class="form-row m-2">
-                        <input class="form-control col-md-12 m-1" type="text"
-                           placeholder="ISBN"
-                           @bind="_modifiableBook.ISBN"/>
-                    </div>
-                    
-                    <div class="form-row m-2">
-                        <input class="form-control col-md-12 m-1" type="text"
-                           placeholder="Keywords"
-                           @bind="_modifiableBook.KeyWords"/>
-                    </div>
-                    
-                    <div class="form-row m-2">
-                        <textarea class="form-control col-md-12 m-1" type="text"
-                           placeholder="Book description"
-                           @bind="_modifiableBook.Description" maxlength="1024"></textarea>
-                    </div>
-
                     <br/><br/>
-                    <button class="btn btn-primary" @onclick="SaveModifiedBook">
+                    <button class="btn btn-primary" @onclick="SaveModifiedAuthor">
                         Save
                     </button>
                 </div>
@@ -110,52 +147,61 @@
 @code {
     readonly BookSearchingDto _bookSearchingDto = new BookSearchingDto();
     private List<BookModel> _bookModels = new List<BookModel>();
-    private bool _showPopUp;
-    private BookModel _modifiableBook;
+    
+    private bool _showBookModificationPopUp;
+    private bool _showAuthorModificationPopUp;
+    private BookDto _modifiableBook;
+    private AuthorModel _modifiableAuthor;
     
     private async void FindBook()
     {
         _bookModels = (await BookActionProcessor.FindBooks(_bookSearchingDto)).ToList();
     }
 
-    private void EditBook(BookModel book)
-    {
-        _showPopUp = true;
-        _modifiableBook = book;
-    }
-
     private void DeleteBook(BookModel book)
     {
         _bookModels.RemoveAll(b => b.Id == book.Id);
-        
-    // TODO: call BookDeleteProvider from LogicLayer (requires method delete by ID)
-    // TODO: show confirmation form (maybe admin need to enter the book name to delete it)    
+        BookActionProcessor.RemoveBookById(book.Id);
     }
     
-    private void ClosePopUp()
-    {
-        _showPopUp = false;
-        _modifiableBook = null;
-    }
-
     private async void SaveModifiedBook()
     {
         var updatedBookIndex = _bookModels.IndexOf(_bookModels.Find(b => b.Id == _modifiableBook.Id));
-        _bookModels[updatedBookIndex] = _modifiableBook;
+        _bookModels[updatedBookIndex] = _modifiableBook.BookModelFromBookDto();
         
-        await BookActionProcessor.UpdateBookById(_modifiableBook.Id, new BookCreationDto
-        {
-            Id =  _modifiableBook.Id,
-            Author = _modifiableBook.Author,
-            Description = _modifiableBook.Description,
-            Isbn = _modifiableBook.ISBN,
-            BookName = _modifiableBook.Name,
-            PublishYear = _modifiableBook.PublishYear,
-            KeyWordModels = _modifiableBook.KeyWords
-        });
+        HideBookModificationPopUp();
 
-        ClosePopUp();
+        await BookActionProcessor.UpdateBookById(_modifiableBook.Id, _modifiableBook);
+    }
+    
+    private void ShowBookModificationPopUp(BookModel book)
+    {
+        _showBookModificationPopUp = true;
+        _modifiableBook = book.BookDtoFromBookModel();
+    }
 
-    // TODO: call BookSavingProvider from LogicLayer (requires method update by ID)
+    private void HideBookModificationPopUp()
+    {
+        _showBookModificationPopUp = false;
+    }
+
+    private async void SaveModifiedAuthor()
+    {
+        _modifiableBook.Author = _modifiableAuthor;
+        
+        HideAuthorModificationPopUp();
+
+        await AuthorActionProcessor.UpdateAuthorById(_modifiableAuthor.Id, _modifiableAuthor.AuthorModelToAuthorDto());
+    }
+    
+    private void ShowAuthorModificationPopUp(AuthorModel author)
+    {
+        _showAuthorModificationPopUp = true;
+        _modifiableAuthor = author;
+    }
+
+    private void HideAuthorModificationPopUp()
+    {
+        _showAuthorModificationPopUp = false;
     }
 }

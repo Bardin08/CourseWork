@@ -2,7 +2,8 @@
 using System.Linq;
 using CourseWork.LogicLayer.Abstractions;
 using CourseWork.Shared.Dtos;
-using CourseWork.Shared.Models;
+ using CourseWork.Shared.Helpers;
+ using CourseWork.Shared.Models;
 
 namespace CourseWork.UI.ViewModels
 {
@@ -50,14 +51,14 @@ namespace CourseWork.UI.ViewModels
             ShowBookModificationPopUp = false;
         }
         
-        public BookModel ModifiableBook { get; private set; }
+        public BookDto ModifiableBook { get; private set; }
         public bool ShowBookModificationPopUp { get; set; }
 
         public void ShowPopUp(BookModel bookToModify)
         {
             if (bookToModify == null) return;
             
-            ModifiableBook = bookToModify;
+            ModifiableBook = bookToModify.BookDtoFromBookModel();
             ShowBookModificationPopUp = true;
         }
         
@@ -70,16 +71,7 @@ namespace CourseWork.UI.ViewModels
         {
             ClosePopUp();
 
-            await _bookActionProcessor.UpdateBookById(ModifiableBook.Id, new BookCreationDto
-            {
-                Id = ModifiableBook.Id,
-                Author = ModifiableBook.Author,
-                Description = ModifiableBook.Description,
-                Isbn = ModifiableBook.ISBN,
-                BookName = ModifiableBook.Name,
-                PublishYear = ModifiableBook.PublishYear,
-                KeyWordModels = ModifiableBook.KeyWords
-            });
+            await _bookActionProcessor.UpdateBookById(ModifiableBook.Id, ModifiableBook);
         }
     }
 }

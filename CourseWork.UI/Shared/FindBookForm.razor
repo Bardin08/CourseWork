@@ -23,7 +23,7 @@
   <div class="form-row">
     <div class="col-md-8 mb-3">
       <label>Key Words</label>
-      <InputText DisplayName="Key Words" @bind-Value="BookSearchingDto.KeyWords" class="form-control" placeholder="Enter keywords.."/>
+      <InputText DisplayName="Key Words" @bind-Value="BookSearchingDto.KeyWordsString" class="form-control" placeholder="Enter keywords.."/>
     </div>
     <div class="col-md-4 mb-3">
       <label>ISBN</label>
@@ -46,7 +46,7 @@
       <br>
     }
     
-    @if (BookSearchingDto.KeyWords?.Length > 0)
+    @if (BookSearchingDto.KeyWordsString?.Length > 0)
     {
       <label>By key words: </label>
       <InputCheckbox @bind-Value="@BookSearchingDto.SearchByKeyWords"/>
