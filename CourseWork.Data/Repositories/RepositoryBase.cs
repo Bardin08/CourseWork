@@ -9,59 +9,64 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 namespace CourseWork.Data.Repositories
 {
     public class RepositoryBase<TEntity, TContext> 
-        :IRepositoryBase<TEntity> 
+        :IRepositoryBase<TEntity>, IDisposable
         where TEntity : class
         where TContext : DbContext
     {
-        public RepositoryBase(TContext repositoryContext)
+        private readonly TContext _context;
+
+        protected RepositoryBase(TContext context)
         {
-            RepositoryContext = repositoryContext;
+            _context = context;
         }
 
-        public TContext RepositoryContext { get; private set; }
-        
         public IQueryable<TEntity> FindAll(bool trackChanges = true)
         {
             return trackChanges
-                ? RepositoryContext.Set<TEntity>()
-                : RepositoryContext.Set<TEntity>().AsNoTracking();
+                ? _context.Set<TEntity>()
+                : _context.Set<TEntity>().AsNoTracking();
         }
 
         public IQueryable<TEntity> FindByCondition(Expression<Func<TEntity, bool>> expression, bool trackChanges = true)
         {
             return trackChanges
-                ? RepositoryContext.Set<TEntity>().Where(expression)
-                : RepositoryContext.Set<TEntity>().AsNoTracking().Where(expression);
+                ? _context.Set<TEntity>().Where(expression)
+                : _context.Set<TEntity>().AsNoTracking().Where(expression);
         }
 
         public Task<TEntity> FindAsync(string entityId)
         {
-            return RepositoryContext.Set<TEntity>().FindAsync(entityId).AsTask();
+            return _context.Set<TEntity>().FindAsync(entityId).AsTask();
         }
 
         public void Create(TEntity entity)
         {
-            RepositoryContext.Set<TEntity>().Add(entity);
+            _context.Set<TEntity>().Add(entity);
         }
 
         public Task CreateAsync(TEntity entity)
         {
-            return RepositoryContext.Set<TEntity>().AddAsync(entity).AsTask();
+            return _context.Set<TEntity>().AddAsync(entity).AsTask();
         }
 
         public EntityEntry<TEntity> Update(TEntity entity)
         {
-            return RepositoryContext.Set<TEntity>().Update(entity);
+            return _context.Set<TEntity>().Update(entity);
         }
 
         public void Delete(TEntity entity)
         {
-            RepositoryContext.Set<TEntity>().Remove(entity);
+            _context.Set<TEntity>().Remove(entity);
         }
 
         public Task<int> SaveChangesAsync()
         {
-            return RepositoryContext.SaveChangesAsync();
+            return _context.SaveChangesAsync();
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
         }
     }
 }
