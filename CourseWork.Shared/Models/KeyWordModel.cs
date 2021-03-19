@@ -13,5 +13,10 @@
         /// Keyword string representation
         /// </summary>
         public string Word { get; set; }
+        
+        public static implicit operator string(KeyWordModel model)
+        {
+            return model.Word;
+        }
     }
 }
