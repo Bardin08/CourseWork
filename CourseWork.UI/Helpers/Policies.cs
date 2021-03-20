@@ -2,7 +2,7 @@
 
 namespace CourseWork.UI.Helpers
 {
-    public class Policies
+    internal static class Policies
     {
         public const string IsAdmin = "IsAdmin";
         public const string IsUser = "IsUser";
