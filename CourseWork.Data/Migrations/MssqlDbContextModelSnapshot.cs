@@ -32,7 +32,7 @@ namespace CourseWork.Data.Migrations
                         .HasColumnType("nvarchar(1024)")
                         .HasColumnName("book_description");
 
-                    b.Property<string>("ISBN")
+                    b.Property<string>("Isbn")
                         .HasMaxLength(17)
                         .HasColumnType("nvarchar(17)")
                         .HasColumnName("book_isbn");

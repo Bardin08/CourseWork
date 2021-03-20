@@ -32,7 +32,7 @@
             <th scope="col">Author</th>
             <th scope="col">Publishment year</th>
             <th scope="col">Descrition</th>
-            <th scope="col">ISBN</th>
+            <th scope="col">Isbn</th>
             <AuthorizeView Policy="@Policies.IsAdmin">
                 <th scope="col">Actions</th>
             </AuthorizeView>
@@ -46,7 +46,7 @@
                 <td>@book.Author.FirstName @book.Author.LastName</td>
                 <td>@book.PublishYear</td>
                 <td>@book.Description</td>
-                <td>@book.ISBN</td>
+                <td>@book.Isbn</td>
                 <AuthorizeView Policy="@Policies.IsAdmin">
                     <td>
                         <button class="btn btn-info m-2 w-auto" @onclick="() => ShowBookModificationPopUp(book)">Edit</button> <br> 
@@ -92,7 +92,7 @@
                         
                     <div class="form-row m-2">
                         <input class="form-control col-md-12 m-1" type="text"
-                               placeholder="ISBN"
+                               placeholder="Isbn"
                                @bind="_modifiableBook.Isbn"/>
                     </div>
                         
@@ -190,7 +190,7 @@
                     
                 <div class="form-row m-2">
                     <input class="form-control col-md-12 m-1" type="text"
-                           placeholder="ISBN"
+                           placeholder="Isbn"
                            @bind="_newBookDto.Isbn"/>
                 </div>
                     
@@ -231,7 +231,7 @@
     
     private async void FindBook()
     {
-        _bookModels = (await BookActionProcessor.FindBooks(_bookSearchingDto)).ToList();
+        _bookModels = (await BookActionProcessor.GetBooks(_bookSearchingDto)).ToList();
     }
     
     private void DeleteBook(BookModel book)
@@ -263,11 +263,9 @@
 
     private async void SaveModifiedAuthor()
     {
-        _modifiableBook.Author = _modifiableAuthor;
-        
         HideAuthorModificationPopUp();
-
-        await AuthorActionProcessor.UpdateAuthorById(_modifiableAuthor.Id, _modifiableAuthor.AuthorModelToAuthorDto());
+        _modifiableBook.Author = _modifiableAuthor;
+        await AuthorActionProcessor.UpdateAuthor(_modifiableAuthor.AuthorDtoFromAuthorModel());
     }
     
     private void ShowAuthorModificationPopUp(AuthorModel author)
@@ -301,7 +299,7 @@
         
         _newBookDto.Id = Guid.NewGuid().ToString();
         _newBookDto.Author.Id = Guid.NewGuid().ToString();
-        _newBookDto.KeyWordModels = _newBookDto.KeyWordsString.KeyWordStringToModelsList();
+        _newBookDto.KeyWordModels = _newBookDto.KeyWordsString.KeywordModelsListFromKeywordsString();
         
         BookActionProcessor.CreateBook(_newBookDto);
     }

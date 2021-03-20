@@ -19,14 +19,13 @@ namespace CourseWork.Shared.Dtos
         public string BookName { get; set; }
         [StringLength(64, MinimumLength = 1, ErrorMessage = "Author name can`t be shorter that 1 symbol or longer than 64")]
         public string AuthorName { get; set; }
-        [StringLength(17, MinimumLength = 1, ErrorMessage = "ISBN can`t be shorter that 1 symbol or longer than 17")]
+        [StringLength(17, MinimumLength = 1, ErrorMessage = "Isbn can`t be shorter that 1 symbol or longer than 17")]
         public string Isbn { get; set; }
         public string KeyWordsString { get; set; }
         public AuthorModel Author { get; set; }
         
         [MaxLength(1024, ErrorMessage = "Description can`t be longer than 1024 characters")]
         public string Description { get; set; }
-        
         public List<KeyWordModel> KeyWordModels { get; set; }
 
     }

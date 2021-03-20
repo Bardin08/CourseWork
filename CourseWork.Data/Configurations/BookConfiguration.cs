@@ -13,7 +13,7 @@ namespace CourseWork.Data.Configurations
             builder.Property(bookModel => bookModel.Name).HasColumnName("book_name");
             builder.Property(bookModel => bookModel.Description).HasColumnName("book_description").HasMaxLength(1024);
             builder.Property(bookModel => bookModel.PublishYear).HasColumnName("book_publish_year");
-            builder.Property(bookModel => bookModel.ISBN).HasColumnName("book_isbn").HasMaxLength(17);
+            builder.Property(bookModel => bookModel.Isbn).HasColumnName("book_isbn").HasMaxLength(17);
         }
     }
 }

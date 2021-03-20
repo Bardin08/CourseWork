@@ -52,14 +52,14 @@ namespace CourseWork.LogicLayer.Processors
             await bookRepository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<BookModel>> FindBooks(BookSearchingDto bookSearchingDto)
+        public async Task<IEnumerable<BookModel>> GetBooks(BookSearchingDto bookSearchingDto)
         {
-            var bookRepository = new BookRepository(_contextFactory.CreateDbContext());
-             
             if (bookSearchingDto == null || bookSearchingDto.SearchingCriteriaAmount == 0)
             {
                 return await Task.FromResult(System.Array.Empty<BookModel>());
             }
+         
+            var bookRepository = new BookRepository(_contextFactory.CreateDbContext());
             
             var searchingStrategies = new DefaultBookSearchingStrategyFactory()
                 .GetSearchingStrategies(bookSearchingDto).ToList();
@@ -83,13 +83,6 @@ namespace CourseWork.LogicLayer.Processors
             
             books.ToList().TrimExcess();
             return books;
-        }
-
-        public Task<IEnumerable<BookModel>> FindAllBooks()
-        {
-            var bookRepository = new BookRepository(_contextFactory.CreateDbContext());
-            var allBooks = bookRepository.FindAll();
-            return Task.FromResult<IEnumerable<BookModel>>(allBooks.ToList());
         }
     }
 }

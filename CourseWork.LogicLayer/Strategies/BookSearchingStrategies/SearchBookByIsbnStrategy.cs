@@ -8,7 +8,7 @@ namespace CourseWork.LogicLayer.Strategies.BookSearchingStrategies
     {
         public IQueryable<BookModel> Execute(IQueryable<BookModel> allBooks, BookSearchingDto bookSearchingDto)
         {
-            return allBooks.Where(book => book.ISBN == bookSearchingDto.Isbn);
+            return allBooks.Where(book => book.Isbn == bookSearchingDto.Isbn);
         }
     }
 }

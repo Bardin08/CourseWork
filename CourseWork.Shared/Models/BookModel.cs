@@ -14,7 +14,7 @@ namespace CourseWork.Shared.Models
         /// <summary>
         /// International standard book number
         /// </summary>
-        public string ISBN { get; set; }
+        public string Isbn { get; set; }
         /// <summary>
         /// Book name
         /// </summary>

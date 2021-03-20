@@ -8,7 +8,7 @@ namespace CourseWork.Shared.Helpers
 {
     public static class MappingHelper
     {
-        public static AuthorDto AuthorModelToAuthorDto(this AuthorModel authorModel)
+        public static AuthorDto AuthorDtoFromAuthorModel(this AuthorModel authorModel)
         {
             return new AuthorDto
             {
@@ -18,7 +18,7 @@ namespace CourseWork.Shared.Helpers
             };
         }
         
-        public static AuthorModel AuthorDtoToUserModel(this AuthorDto authorDto)
+        public static AuthorModel AuthorModelFromAuthorDto(this AuthorDto authorDto)
         {
             return new AuthorModel
             {
@@ -38,7 +38,7 @@ namespace CourseWork.Shared.Helpers
                 PublishYear = bookDto.PublishYear,
                 Description = bookDto.Description,
                 KeyWords = bookDto.KeyWordModels,
-                ISBN = bookDto.Isbn
+                Isbn = bookDto.Isbn
             };
         }
 
@@ -52,20 +52,20 @@ namespace CourseWork.Shared.Helpers
                 PublishYear = bookModel.PublishYear,
                 Description = bookModel.Description,
                 KeyWordModels = bookModel.KeyWords,
-                KeyWordsString = bookModel.KeyWords.KeyWordsListToString(),
-                Isbn = bookModel.ISBN,
+                KeyWordsString = bookModel.KeyWords.KeywordsStringFromKeywordModelsList(),
+                Isbn = bookModel.Isbn,
                 AuthorName = bookModel.Author.FirstName + " " + bookModel.Author.LastName
             };
         }
 
-        public static List<KeyWordModel> KeyWordStringToModelsList(this string keywords)
+        public static List<KeyWordModel> KeywordModelsListFromKeywordsString(this string keywords)
         {
             var words = keywords.Replace(",", "").Split(" ");
             return words.Select(word =>
                 new KeyWordModel {Id = Guid.NewGuid().ToString(), Word = word}).ToList();
         }
         
-        private static string KeyWordsListToString(this IEnumerable<KeyWordModel> keyWords)
+        private static string KeywordsStringFromKeywordModelsList(this IEnumerable<KeyWordModel> keyWords)
         {
             var words = keyWords.Select(word => (string) word).ToList();
             return string.Join(", ", words);

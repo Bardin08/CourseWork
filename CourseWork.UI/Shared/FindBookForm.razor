@@ -28,15 +28,15 @@
       <InputText DisplayName="Key Words" @bind-Value="BookSearchingDto.KeyWordsString" class="form-control" placeholder="Enter keywords.."/>
     </div>
     <div class="col-md-4 mb-3">
-      <label>ISBN</label>
-      <InputText DisplayName="ISBN" @bind-Value="BookSearchingDto.Isbn" class="form-control" placeholder="Enter ISBN.."/>
+      <label>Isbn</label>
+      <InputText DisplayName="Isbn" @bind-Value="BookSearchingDto.Isbn" class="form-control" placeholder="Enter Isbn.."/>
     </div>
   </div>
   <div class="align-items-center col-md-4">
     <h3> Searching criteria: </h3>
     @if (BookSearchingDto.Isbn?.Length > 0)
     {
-      <label>By ISBN: </label>
+      <label>By Isbn: </label>
       <InputCheckbox @bind-Value="@BookSearchingDto.SearchByIsbn"/>
       <br>
     }

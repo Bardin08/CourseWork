@@ -23,7 +23,7 @@ namespace CourseWork.UI.ViewModels
 
         public async void FindBook()
         {
-            Books = (await _bookActionProcessor.FindBooks(BookSearchingDto)).ToList();
+            Books = (await _bookActionProcessor.GetBooks(BookSearchingDto)).ToList();
         }
 
         public void EditBook(BookModel book)
