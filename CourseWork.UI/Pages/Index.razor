@@ -9,7 +9,16 @@
 @inject IBookActionProcessor BookActionProcessor
 @inject IAuthorActionProcessor AuthorActionProcessor
 
-<FindBookForm BookSearchingDto="@_bookSearchingDto" ValidationSuccessHandler="@FindBook"/>
+<FindBookForm BookSearchingDto="@_bookSearchingDto" ValidationSuccessHandler="@FindBook" />
+
+<AuthorizeView Policy="@Policies.IsAdmin">
+    <div>
+        <h3> Adminintrator actions: </h3>
+        <div class="form-row">
+            <button class="btn btn-success  col-md-4" type="submit" @onclick="CreateNewBook">Create new book</button>
+        </div>
+    </div>
+</AuthorizeView>
 
 @if (_bookModels.Any())
 {
@@ -131,7 +140,6 @@
                         <input class="form-control col-md-9 m-1" type="text"
                             placeholder="Author name"
                             @bind="@_modifiableAuthor.LastName"/>
-                        <button type="submit" class="btn btn-info col-md-2 m-1"> Edit </button>
                     </div>
                     
                     <br/><br/>
@@ -144,6 +152,71 @@
     </div>
 }
 
+@if (_showBookCreationPopUp)
+{
+<div class="modal" tabindex="-1" style="display:block" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">New book creation form</h3>
+                <button type="button" class="close" @onclick="HideBookCreationPopUp">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row m-2">
+                    <input class="form-control col-md-12 m-1" type="text"
+                           placeholder="Book name"
+                           @bind="_newBookDto.BookName"/>
+                </div>
+                
+                <div class="form-row m-2">
+                    <input class="form-control col-md-12 m-1" type="text"
+                           placeholder="Book`s author first name"
+                           @bind="_newBookDto.Author.FirstName"/>
+                </div>
+                
+                <div class="form-row m-2">
+                    <input class="form-control col-md-12 m-1" type="text"
+                           placeholder="Book`s author last name"
+                           @bind="_newBookDto.Author.LastName"/>
+                </div>
+                
+                <div class="form-row m-2">
+                    <input class="form-control col-md-12 m-1" type="text"
+                           placeholder="Publish year"
+                           @bind="_newBookDto.PublishYear"/>
+                </div>
+                    
+                <div class="form-row m-2">
+                    <input class="form-control col-md-12 m-1" type="text"
+                           placeholder="ISBN"
+                           @bind="_newBookDto.Isbn"/>
+                </div>
+                    
+                <div class="form-row m-2">
+                    <input class="form-control col-md-12 m-1" type="text"
+                           placeholder="Keywords"
+                           @bind="@_newBookDto.KeyWordsString"/>
+                </div>
+                    
+                <div class="form-row m-2">
+                    <textarea class="form-control col-md-12 m-1" type="text"
+                           placeholder="Book description"
+                           @bind="_newBookDto.Description" maxlength="1024"></textarea>
+                </div>
+
+                <br/><br/>
+                <button class="btn btn-primary" @onclick="SaveNewBookToDb">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+}
+
 @code {
     readonly BookSearchingDto _bookSearchingDto = new BookSearchingDto();
     private List<BookModel> _bookModels = new List<BookModel>();
@@ -152,12 +225,15 @@
     private bool _showAuthorModificationPopUp;
     private BookDto _modifiableBook;
     private AuthorModel _modifiableAuthor;
+
+    private bool _showBookCreationPopUp;
+    private BookDto _newBookDto;
     
     private async void FindBook()
     {
         _bookModels = (await BookActionProcessor.FindBooks(_bookSearchingDto)).ToList();
     }
-
+    
     private void DeleteBook(BookModel book)
     {
         _bookModels.RemoveAll(b => b.Id == book.Id);
@@ -203,5 +279,29 @@
     private void HideAuthorModificationPopUp()
     {
         _showAuthorModificationPopUp = false;
+    }
+
+    private Task CreateNewBook()
+    {
+        _newBookDto = new BookDto();
+        _showBookCreationPopUp = true;
+        return Task.CompletedTask;
+    }
+
+    private void HideBookCreationPopUp()
+    {
+        _showBookCreationPopUp = false;
+    }
+
+    private void SaveNewBookToDb()
+    {
+        HideBookCreationPopUp();
+
+        if (_newBookDto == null) return;
+        
+        _newBookDto.Id = Guid.NewGuid().ToString();
+        _newBookDto.Author.Id = Guid.NewGuid().ToString();
+        
+        BookActionProcessor.CreateBook(_newBookDto);
     }
 }

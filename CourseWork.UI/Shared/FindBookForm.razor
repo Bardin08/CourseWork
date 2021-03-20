@@ -1,5 +1,7 @@
 ﻿@using System.ComponentModel.DataAnnotations
+@using CourseWork.LogicLayer.Abstractions
 @using CourseWork.Shared.Dtos
+@using CourseWork.Shared.Models
 
 <h3>Find the book</h3>
 <EditForm Model="@BookSearchingDto" OnValidSubmit="@ValidationSuccessHandler">
@@ -68,12 +70,11 @@
     }
   </div>
   <div class="align-content-center">
-    <button class="btn btn-success  col-md-4" type="submit">Find</button>
+    <button class="btn btn-success col-md-4 mb-1" type="submit">Find</button>
   </div>
 </EditForm>
     
 @code {
-
   [Required]
   [Parameter]
   public BookSearchingDto BookSearchingDto { get; set; }
