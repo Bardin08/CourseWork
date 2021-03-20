@@ -33,27 +33,22 @@ namespace CourseWork.LogicLayer.Processors
         {
             var bookRepository = new BookRepository(_contextFactory.CreateDbContext());
             
-            var modelToDelete = await bookRepository
-                .FindByCondition(b => b.Id == bookId, false)
-                .FirstOrDefaultAsync();
-            
-            bookRepository.Delete(modelToDelete);
-            await bookRepository.SaveChangesAsync();
-        }
+            var bookToRemove = await bookRepository.FindByCondition(b => b.Id == bookId)
+                .Include(b => b.Author)
+                .Include(b => b.KeyWords).AsQueryable().FirstOrDefaultAsync();
 
+            if (bookToRemove != null)
+            {
+                bookRepository.Delete(bookToRemove);
+                await bookRepository.SaveChangesAsync();
+            }
+        }
+        
         public async Task UpdateBookById(string bookId, BookDto bookDto)
         {
             var bookRepository = new BookRepository(_contextFactory.CreateDbContext());
             
-            var modelToUpdate = await bookRepository
-                .FindByCondition(b => b.Id == bookId, false)
-                .FirstOrDefaultAsync();
-
-            if (modelToUpdate == null) return;
-
-            modelToUpdate = bookDto.BookModelFromBookDto();
-
-            bookRepository.Update(modelToUpdate);
+            bookRepository.Update(bookDto.BookModelFromBookDto());
             await bookRepository.SaveChangesAsync();
         }
 

@@ -301,6 +301,7 @@
         
         _newBookDto.Id = Guid.NewGuid().ToString();
         _newBookDto.Author.Id = Guid.NewGuid().ToString();
+        _newBookDto.KeyWordModels = _newBookDto.KeyWordsString.KeyWordStringToModelsList();
         
         BookActionProcessor.CreateBook(_newBookDto);
     }

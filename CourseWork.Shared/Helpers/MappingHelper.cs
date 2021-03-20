@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CourseWork.Shared.Dtos;
 using CourseWork.Shared.Models;
@@ -56,11 +57,18 @@ namespace CourseWork.Shared.Helpers
                 AuthorName = bookModel.Author.FirstName + " " + bookModel.Author.LastName
             };
         }
+
+        public static List<KeyWordModel> KeyWordStringToModelsList(this string keywords)
+        {
+            var words = keywords.Replace(",", "").Split(" ");
+            return words.Select(word =>
+                new KeyWordModel {Id = Guid.NewGuid().ToString(), Word = word}).ToList();
+        }
         
         private static string KeyWordsListToString(this IEnumerable<KeyWordModel> keyWords)
         {
             var words = keyWords.Select(word => (string) word).ToList();
-            return string.Join(',', words);
+            return string.Join(", ", words);
         }
     }
 }

@@ -23,6 +23,7 @@ namespace CourseWork.LogicLayer.Processors
         public async Task CreateAuthor(AuthorDto authorDto)
         {
             var userRepository = new AuthorRepository(_contextFactory.CreateDbContext());
+            
             await userRepository.CreateAsync(authorDto.AuthorDtoToUserModel());
             await userRepository.SaveChangesAsync();
         }
@@ -31,6 +32,7 @@ namespace CourseWork.LogicLayer.Processors
         public async Task UpdateAuthorById(string authorId, AuthorDto authorDto)
         {
             var userRepository = new AuthorRepository(_contextFactory.CreateDbContext());
+            
             userRepository.Update(authorDto.AuthorDtoToUserModel());
             await userRepository.SaveChangesAsync();
         }
