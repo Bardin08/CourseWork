@@ -7,6 +7,12 @@ namespace CourseWork.Shared.Dtos
 {
     public class BookDto
     {
+        public BookDto()
+        {
+            Author = new AuthorModel();
+            KeyWordModels = new List<KeyWordModel>();
+        }
+        
         public string Id { get; set; }
         [Range(1920, 2021)] public int PublishYear { get; set; } = DateTime.Now.Year;
         [MaxLength(64)]
