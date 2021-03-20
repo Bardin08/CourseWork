@@ -243,6 +243,7 @@
     private async void SaveModifiedBook()
     {
         var updatedBookIndex = _bookModels.IndexOf(_bookModels.Find(b => b.Id == _modifiableBook.Id));
+        _modifiableBook.KeyWordModels = _modifiableBook.KeyWordsString.KeywordModelsListFromKeywordsString();
         _bookModels[updatedBookIndex] = _modifiableBook.BookModelFromBookDto();
         
         HideBookModificationPopUp();
