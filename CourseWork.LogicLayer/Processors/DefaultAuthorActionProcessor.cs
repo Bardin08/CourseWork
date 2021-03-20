@@ -25,7 +25,6 @@ namespace CourseWork.LogicLayer.Processors
             var userRepository = new AuthorRepository(_contextFactory.CreateDbContext());
             await userRepository.CreateAsync(authorDto.AuthorDtoToUserModel());
             await userRepository.SaveChangesAsync();
-            userRepository.Dispose();
         }
 
 
@@ -34,7 +33,6 @@ namespace CourseWork.LogicLayer.Processors
             var userRepository = new AuthorRepository(_contextFactory.CreateDbContext());
             userRepository.Update(authorDto.AuthorDtoToUserModel());
             await userRepository.SaveChangesAsync();
-            userRepository.Dispose();
         }
 
         public async Task<AuthorModel> GetAuthorById(string authorId)
@@ -42,7 +40,6 @@ namespace CourseWork.LogicLayer.Processors
             var userRepository = new AuthorRepository(_contextFactory.CreateDbContext());
             var author = await userRepository.FindByCondition(a => a.Id == authorId)
                 .FirstOrDefaultAsync();
-            userRepository.Dispose();
 
             if (author == null)
             {
@@ -55,7 +52,6 @@ namespace CourseWork.LogicLayer.Processors
         {
             var userRepository = new AuthorRepository(_contextFactory.CreateDbContext());
             var authors = await userRepository.FindAll().ToListAsync(); 
-            userRepository.Dispose();
 
             return authors;
         }

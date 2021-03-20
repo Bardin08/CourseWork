@@ -39,8 +39,6 @@ namespace CourseWork.LogicLayer.Processors
             
             bookRepository.Delete(modelToDelete);
             await bookRepository.SaveChangesAsync();
-            
-            bookRepository.Dispose();
         }
 
         public async Task UpdateBookById(string bookId, BookDto bookDto)
@@ -57,14 +55,12 @@ namespace CourseWork.LogicLayer.Processors
 
             bookRepository.Update(modelToUpdate);
             await bookRepository.SaveChangesAsync();
-            
-            bookRepository.Dispose();
         }
 
         public async Task<IEnumerable<BookModel>> FindBooks(BookSearchingDto bookSearchingDto)
         {
             var bookRepository = new BookRepository(_contextFactory.CreateDbContext());
-            
+             
             if (bookSearchingDto == null || bookSearchingDto.SearchingCriteriaAmount == 0)
             {
                 return await Task.FromResult(System.Array.Empty<BookModel>());
@@ -91,7 +87,6 @@ namespace CourseWork.LogicLayer.Processors
             }
             
             books.ToList().TrimExcess();
-            bookRepository.Dispose();
             return books;
         }
 
@@ -99,7 +94,6 @@ namespace CourseWork.LogicLayer.Processors
         {
             var bookRepository = new BookRepository(_contextFactory.CreateDbContext());
             var allBooks = bookRepository.FindAll();
-            bookRepository.Dispose();
             return Task.FromResult<IEnumerable<BookModel>>(allBooks.ToList());
         }
     }
