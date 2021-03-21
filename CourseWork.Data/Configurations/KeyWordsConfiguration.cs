@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CourseWork.Data.Configurations
 {
-    public class KeyWordsConfiguration : IEntityTypeConfiguration<KeyWordModel>
+    internal class KeyWordsConfiguration : IEntityTypeConfiguration<KeyWordModel>
     {
         public void Configure(EntityTypeBuilder<KeyWordModel> builder)
         {

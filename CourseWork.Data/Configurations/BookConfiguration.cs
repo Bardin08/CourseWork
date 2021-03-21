@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CourseWork.Data.Configurations
 {
-    public class BookConfiguration : IEntityTypeConfiguration<BookModel>
+    internal class BookConfiguration : IEntityTypeConfiguration<BookModel>
     {
         public void Configure(EntityTypeBuilder<BookModel> builder)
         {

@@ -4,7 +4,7 @@ using CourseWork.Shared.Models;
 
 namespace CourseWork.LogicLayer.Abstractions
 {
-    internal interface IBookSearchingStrategy
+    public interface IBookSearchingStrategy
     {
         public IQueryable<BookModel> Execute(IQueryable<BookModel> books, BookSearchingDto bookSearchingDto);
     }
