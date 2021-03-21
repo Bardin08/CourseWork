@@ -1,4 +1,6 @@
-﻿using CourseWork.LogicLayer.Processors;
+﻿using CourseWork.LogicLayer.Abstractions;
+using CourseWork.LogicLayer.Factories;
+using CourseWork.LogicLayer.Processors;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CourseWork.LogicLayer
@@ -7,8 +9,9 @@ namespace CourseWork.LogicLayer
     {
         public static void UseLogicLayer(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddScoped<Abstractions.IBookActionProcessor, DefaultBookActionProcessor>();
-            serviceCollection.AddScoped<Abstractions.IAuthorActionProcessor, DefaultAuthorActionProcessor>();
+            serviceCollection.AddScoped<IBookActionProcessor, DefaultBookActionProcessor>();
+            serviceCollection.AddScoped<IAuthorActionProcessor, DefaultAuthorActionProcessor>();
+            serviceCollection.AddScoped<IBookSearchingStrategyFactory, DefaultBookSearchingStrategyFactory>();
         }
     }
 }
