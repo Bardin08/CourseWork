@@ -25,7 +25,7 @@ namespace CourseWork.LogicLayer.Processors
         public async Task CreateBook(BookDto bookDto)
         {
             var bookRepository = new BookRepository(_contextFactory.CreateDbContext());
-            await bookRepository.CreateAsync(bookDto.BookModelFromBookDto());
+            await bookRepository.CreateAsync(bookDto.ToBookModel());
             await bookRepository.SaveChangesAsync();
             bookRepository.Dispose();
         }
@@ -54,7 +54,7 @@ namespace CourseWork.LogicLayer.Processors
                 .Include(b => b.KeyWords)
                 .FirstOrDefaultAsync();
 
-            var updateModel = bookDto.BookModelFromBookDto();
+            var updateModel = bookDto.ToBookModel();
 
             oldModel.Name = updateModel.Name;
             oldModel.Isbn = updateModel.Isbn;

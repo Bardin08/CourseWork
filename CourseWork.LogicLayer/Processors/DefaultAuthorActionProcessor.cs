@@ -21,7 +21,7 @@ namespace CourseWork.LogicLayer.Processors
         {
             var userRepository = new AuthorRepository(_contextFactory.CreateDbContext());
             
-            userRepository.Update(authorDto.AuthorModelFromAuthorDto());
+            userRepository.Update(authorDto.ToAuthorModel());
             await userRepository.SaveChangesAsync();
         }
     }

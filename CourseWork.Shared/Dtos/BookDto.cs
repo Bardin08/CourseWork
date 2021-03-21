@@ -14,7 +14,8 @@ namespace CourseWork.Shared.Dtos
         }
         
         public string Id { get; set; }
-        [Range(1920, 2021)] public int PublishYear { get; set; } = DateTime.Now.Year;
+        [Range(1920, 2021)] 
+        public int PublishYear { get; set; } = DateTime.Now.Year;
         [MaxLength(64)]
         public string BookName { get; set; }
         [StringLength(64, MinimumLength = 1, ErrorMessage = "Author name can`t be shorter that 1 symbol or longer than 64")]
