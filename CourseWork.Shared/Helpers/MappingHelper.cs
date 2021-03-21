@@ -8,9 +8,9 @@ namespace CourseWork.Shared.Helpers
 {
     public static class MappingHelper
     {
-        public static AuthorDto AuthorDtoFromAuthorModel(this AuthorModel authorModel)
+        public static AuthorDto ToAuthorDto(this AuthorModel authorModel)
         {
-            return new AuthorDto
+            return new()
             {
                 Id = authorModel.Id,
                 FirstName = authorModel.FirstName,
@@ -18,9 +18,9 @@ namespace CourseWork.Shared.Helpers
             };
         }
         
-        public static AuthorModel AuthorModelFromAuthorDto(this AuthorDto authorDto)
+        public static AuthorModel ToAuthorModel(this AuthorDto authorDto)
         {
-            return new AuthorModel
+            return new()
             {
                 Id = authorDto.Id,
                 FirstName = authorDto.FirstName,
@@ -28,9 +28,25 @@ namespace CourseWork.Shared.Helpers
             };
         }
         
-        public static BookModel BookModelFromBookDto(this BookDto bookDto)
+        public static BookDto ToBookDto(this BookModel bookModel)
         {
-            return new BookModel
+            return new()
+            {
+                Id = bookModel.Id,
+                Author = bookModel.Author,
+                BookName = bookModel.Name,
+                PublishYear = bookModel.PublishYear,
+                Description = bookModel.Description,
+                KeyWordModels = bookModel.KeyWords,
+                KeyWordsString = bookModel.KeyWords.ToKeywordsString(),
+                Isbn = bookModel.Isbn,
+                AuthorName = bookModel.Author.FirstName + " " + bookModel.Author.LastName
+            };
+        }
+        
+        public static BookModel ToBookModel(this BookDto bookDto)
+        {
+            return new()
             {
                 Id = bookDto.Id,
                 Author = bookDto.Author,
@@ -42,30 +58,14 @@ namespace CourseWork.Shared.Helpers
             };
         }
 
-        public static BookDto BookDtoFromBookModel(this BookModel bookModel)
-        {
-            return new BookDto
-            {
-                Id = bookModel.Id,
-                Author = bookModel.Author,
-                BookName = bookModel.Name,
-                PublishYear = bookModel.PublishYear,
-                Description = bookModel.Description,
-                KeyWordModels = bookModel.KeyWords,
-                KeyWordsString = bookModel.KeyWords.KeywordsStringFromKeywordModelsList(),
-                Isbn = bookModel.Isbn,
-                AuthorName = bookModel.Author.FirstName + " " + bookModel.Author.LastName
-            };
-        }
-
-        public static List<KeyWordModel> KeywordModelsListFromKeywordsString(this string keywords)
+        public static List<KeyWordModel> ToKeywordModelsList(this string keywords)
         {
             var words = keywords.Replace(",", "").Split(" ");
             return words.Select(word =>
                 new KeyWordModel {Id = Guid.NewGuid().ToString(), Word = word}).ToList();
         }
         
-        private static string KeywordsStringFromKeywordModelsList(this IEnumerable<KeyWordModel> keyWords)
+        private static string ToKeywordsString(this IEnumerable<KeyWordModel> keyWords)
         {
             var words = keyWords.Select(word => (string) word).ToList();
             return string.Join(", ", words);
