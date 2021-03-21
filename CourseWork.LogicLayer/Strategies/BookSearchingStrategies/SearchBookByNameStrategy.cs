@@ -6,9 +6,9 @@ namespace CourseWork.LogicLayer.Strategies.BookSearchingStrategies
 {
     internal sealed class SearchBookByNameStrategy : Abstractions.IBookSearchingStrategy
     {
-        public IQueryable<BookModel> Execute(IQueryable<BookModel> allBooks, BookSearchingDto bookSearchingDto)
+        public IQueryable<BookModel> Execute(IQueryable<BookModel> books, BookSearchingDto bookSearchingDto)
         {
-            return allBooks.Where(book => book.Name
+            return books.Where(book => book.Name
                 .Contains(bookSearchingDto.BookName));
         }
     }

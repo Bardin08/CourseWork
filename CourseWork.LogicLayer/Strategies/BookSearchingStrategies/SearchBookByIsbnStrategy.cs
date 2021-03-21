@@ -6,9 +6,9 @@ namespace CourseWork.LogicLayer.Strategies.BookSearchingStrategies
 {
     internal sealed class SearchBookByIsbnStrategy : Abstractions.IBookSearchingStrategy
     {
-        public IQueryable<BookModel> Execute(IQueryable<BookModel> allBooks, BookSearchingDto bookSearchingDto)
+        public IQueryable<BookModel> Execute(IQueryable<BookModel> books, BookSearchingDto bookSearchingDto)
         {
-            return allBooks.Where(book => book.Isbn == bookSearchingDto.Isbn);
+            return books.Where(book => book.Isbn == bookSearchingDto.Isbn);
         }
     }
 }

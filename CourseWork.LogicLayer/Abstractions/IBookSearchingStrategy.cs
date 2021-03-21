@@ -6,6 +6,6 @@ namespace CourseWork.LogicLayer.Abstractions
 {
     internal interface IBookSearchingStrategy
     {
-        public IQueryable<BookModel> Execute(IQueryable<BookModel> allBooks, BookSearchingDto bookSearchingDto);
+        public IQueryable<BookModel> Execute(IQueryable<BookModel> books, BookSearchingDto bookSearchingDto);
     }
 }
