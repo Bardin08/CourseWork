@@ -3,7 +3,7 @@ using CourseWork.Shared.Dtos;
 
 namespace CourseWork.LogicLayer.Abstractions
 {
-    internal interface IBookSearchingStrategyFactory
+    public interface IBookSearchingStrategyFactory
     {
         IEnumerable<IBookSearchingStrategy> GetSearchingStrategies(BookSearchingDto bookSearchingDto);
     }

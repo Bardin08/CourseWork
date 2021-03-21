@@ -1,6 +1,9 @@
 namespace CourseWork.Shared.Models
 {
-    public class KeyWordModel
+    /// <summary>
+    /// Represents a keyword model
+    /// </summary>
+    public record KeyWordModel
     {
         /// <summary>
         /// Keyword Id
@@ -8,11 +11,11 @@ namespace CourseWork.Shared.Models
         /// <remarks>
         /// Represented by a GUID in a string view
         /// </remarks>
-        public string Id { get; set; }
+        public string Id { get; init; }
         /// <summary>
         /// Keyword string representation
         /// </summary>
-        public string Word { get; set; }
+        public string Word { get; init; }
         
         public static implicit operator string(KeyWordModel model)
         {

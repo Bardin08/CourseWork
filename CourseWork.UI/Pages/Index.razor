@@ -243,8 +243,8 @@
     private async void SaveModifiedBook()
     {
         var updatedBookIndex = _bookModels.IndexOf(_bookModels.Find(b => b.Id == _modifiableBook.Id));
-        _modifiableBook.KeyWordModels = _modifiableBook.KeyWordsString.KeywordModelsListFromKeywordsString();
-        _bookModels[updatedBookIndex] = _modifiableBook.BookModelFromBookDto();
+        _modifiableBook.KeyWordModels = _modifiableBook.KeyWordsString.ToKeywordModelsList();
+        _bookModels[updatedBookIndex] = _modifiableBook.ToBookModel();
         
         HideBookModificationPopUp();
 
@@ -254,7 +254,7 @@
     private void ShowBookModificationPopUp(BookModel book)
     {
         _showBookModificationPopUp = true;
-        _modifiableBook = book.BookDtoFromBookModel();
+        _modifiableBook = book.ToBookDto();
     }
 
     private void HideBookModificationPopUp()
@@ -266,7 +266,7 @@
     {
         HideAuthorModificationPopUp();
         _modifiableBook.Author = _modifiableAuthor;
-        await AuthorActionProcessor.UpdateAuthor(_modifiableAuthor.AuthorDtoFromAuthorModel());
+        await AuthorActionProcessor.UpdateAuthor(_modifiableAuthor.ToAuthorDto());
     }
     
     private void ShowAuthorModificationPopUp(AuthorModel author)
@@ -300,7 +300,7 @@
         
         _newBookDto.Id = Guid.NewGuid().ToString();
         _newBookDto.Author.Id = Guid.NewGuid().ToString();
-        _newBookDto.KeyWordModels = _newBookDto.KeyWordsString.KeywordModelsListFromKeywordsString();
+        _newBookDto.KeyWordModels = _newBookDto.KeyWordsString.ToKeywordModelsList();
         
         BookActionProcessor.CreateBook(_newBookDto);
     }

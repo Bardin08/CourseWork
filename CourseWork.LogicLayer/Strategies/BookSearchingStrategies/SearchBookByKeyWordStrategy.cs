@@ -8,26 +8,25 @@ namespace CourseWork.LogicLayer.Strategies.BookSearchingStrategies
 {
     internal sealed class SearchBookByKeyWordStrategy : Abstractions.IBookSearchingStrategy
     {
-        public IQueryable<BookModel> Execute(IQueryable<BookModel> allBooks, BookSearchingDto bookSearchingDto)
+        public IQueryable<BookModel> Execute(IQueryable<BookModel> books, BookSearchingDto bookSearchingDto)
         {
             var keyWords = bookSearchingDto.KeyWordsString.Replace(",", "").Split(" ");
-
-            var books = new List<BookModel>();
+            var suitableBooks = new List<BookModel>();
             
-            foreach (var book in allBooks)
+            foreach (var book in books)
             {
                 foreach (var keyWord in keyWords)
                 {
-                    if (books.Contains(book)) break;
+                    if (suitableBooks.Contains(book)) break;
                     if (book.KeyWords.Any(word => 
                         word.Word.Contains(keyWord, StringComparison.InvariantCultureIgnoreCase)))
                     {
-                        books.Add(book);
+                        suitableBooks.Add(book);
                     }
                 }
             }
 
-            return books.AsQueryable();
+            return suitableBooks.AsQueryable();
         }
     }
 }
