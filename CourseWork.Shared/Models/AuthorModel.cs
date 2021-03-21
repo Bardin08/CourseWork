@@ -1,5 +1,8 @@
 ﻿namespace CourseWork.Shared.Models
 {
+    /// <summary>
+    /// Represents an author model
+    /// </summary>
     public class AuthorModel
     {
         /// <summary>

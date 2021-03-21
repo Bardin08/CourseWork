@@ -2,6 +2,9 @@
 
 namespace CourseWork.Shared.Models
 {
+    /// <summary>
+    /// Represents book model
+    /// </summary>
     public class BookModel
     {
         /// <summary>
@@ -10,7 +13,7 @@ namespace CourseWork.Shared.Models
         /// <remarks>
         /// Represented by a GUID in a string view
         /// </remarks>
-        public string Id { get; set; }
+        public string Id { get; init; }
         /// <summary>
         /// International standard book number
         /// </summary>
@@ -29,7 +32,7 @@ namespace CourseWork.Shared.Models
         /// <remarks>
         /// Represented by <see cref="AuthorModel"/>
         /// </remarks>
-        public AuthorModel Author { get; set; }
+        public AuthorModel Author { get; init; }
         /// <summary>
         /// Book publish year
         /// </summary>
@@ -37,6 +40,6 @@ namespace CourseWork.Shared.Models
         /// <summary>
         /// A list of <see cref="KeyWordModel"/>
         /// </summary>
-        public List<KeyWordModel> KeyWords { get; set; }
+        public List<KeyWordModel> KeyWords { get; init; }
     }
 }
