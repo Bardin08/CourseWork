@@ -11,6 +11,8 @@ namespace CourseWork.LogicLayer.Strategies.BookSearchingStrategies
             return books.Where(book => book.Author.FirstName
                 .Contains(bookSearchingDto.AuthorName) ||
                 book.Author.LastName
+                .Contains(bookSearchingDto.AuthorName) ||
+                (book.Author.FirstName + " " + book.Author.LastName)
                 .Contains(bookSearchingDto.AuthorName));
         }
     }
