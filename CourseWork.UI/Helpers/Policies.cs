@@ -11,7 +11,6 @@ namespace CourseWork.UI.Helpers
         {
             return new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
-                .RequireRole("Admin")
                 .Build();
         }
 
@@ -19,7 +18,6 @@ namespace CourseWork.UI.Helpers
         {
             return new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
-                .RequireRole("User")
                 .Build();
         }
     }

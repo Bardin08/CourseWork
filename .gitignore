@@ -13,3 +13,5 @@ obj/
 CourseWork.Shared/bin/
 CourseWork.LogicLayer/bin/
 *.json
+F/
+CourseWork.Configuration/bin/
