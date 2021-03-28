@@ -10,16 +10,10 @@ namespace CourseWork.Data
         public static void UseDataAccessLayer(this IServiceCollection serviceCollection, 
             IConfiguration configuration)
         {
-            serviceCollection.AddDbContexts(configuration);
-        }
-
-        private static void AddDbContexts(this IServiceCollection serviceCollection,
-            IConfiguration configuration)
-        {
-            serviceCollection.AddDbContextFactory<MssqlDbContext>(options => 
+            serviceCollection.AddDbContextFactory<ApplicationDbContext>(options => 
                 options.UseSqlServer(configuration.GetConnectionString("LibraryDb")));
-            serviceCollection.AddDbContext<ApplicationIdentityDbContext>(options => 
-                options.UseSqlite(configuration.GetConnectionString("IdentityDb")));            
+            serviceCollection.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("LibraryDb")));
         }
     }
 }

@@ -4,9 +4,9 @@ using CourseWork.Shared.Models;
 
 namespace CourseWork.Data.Repositories
 {
-    public class AuthorRepository : RepositoryBase<AuthorModel, MssqlDbContext>, IAuthorRepository
+    public class AuthorRepository : RepositoryBase<AuthorModel, ApplicationDbContext>, IAuthorRepository
     {
-        public AuthorRepository(MssqlDbContext context) : base(context)
+        public AuthorRepository(ApplicationDbContext context) : base(context)
         {
         }
     }

@@ -4,9 +4,9 @@ using CourseWork.Shared.Models;
 
 namespace CourseWork.Data.Repositories
 {
-    public class BookRepository : RepositoryBase<BookModel, MssqlDbContext>, IBookRepository
+    public class BookRepository : RepositoryBase<BookModel, ApplicationDbContext>, IBookRepository
     {
-        public BookRepository(MssqlDbContext context) : base(context)
+        public BookRepository(ApplicationDbContext context) : base(context)
         {
         }
     }
