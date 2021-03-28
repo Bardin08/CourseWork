@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CourseWork.Data.Abstractions;
 using CourseWork.Data.Contexts;
 using CourseWork.Data.Repositories;
 using CourseWork.Shared.Dtos;
@@ -13,16 +14,16 @@ namespace CourseWork.LogicLayer.Processors
 {
     public class DefaultBookActionProcessor : IBookActionProcessor
     {
-        private readonly IDbContextFactory<MssqlDbContext> _contextFactory;
+        private readonly IDbContextFactory<ApplicationDbContext> _contextFactory;
         private readonly IBookSearchingStrategyFactory _searchingStrategyFactory;
 
-        public DefaultBookActionProcessor(IDbContextFactory<MssqlDbContext> contextFactory, 
+        public DefaultBookActionProcessor(IDbContextFactory<ApplicationDbContext> contextFactory, 
             IBookSearchingStrategyFactory searchingStrategyFactory)
         {
             _contextFactory = contextFactory;
             _searchingStrategyFactory = searchingStrategyFactory;
         }
-
+        
         public async Task CreateBook(BookDto bookDto)
         {
             var bookRepository = new BookRepository(_contextFactory.CreateDbContext());
@@ -34,7 +35,7 @@ namespace CourseWork.LogicLayer.Processors
         {
             var bookRepository = new BookRepository(_contextFactory.CreateDbContext());
             
-            var bookToRemove = await bookRepository.FindByCondition(b => b.Id == bookId)
+            var bookToRemove = await bookRepository.FindByCondition(b => b.Id == bookId, false)
                 .Include(b => b.Author)
                 .Include(b => b.KeyWords).AsQueryable().FirstOrDefaultAsync();
 
@@ -49,7 +50,7 @@ namespace CourseWork.LogicLayer.Processors
         {
             var bookRepository = new BookRepository(_contextFactory.CreateDbContext());
 
-            var oldModel = await bookRepository.FindByCondition(b => b.Id == bookId)
+            var oldModel = await bookRepository.FindByCondition(b => b.Id == bookId, false)
                 .Include(b => b.Author)
                 .Include(b => b.KeyWords)
                 .FirstOrDefaultAsync();

@@ -10,9 +10,9 @@ namespace CourseWork.LogicLayer.Processors
 {
     public class DefaultAuthorActionProcessor : IAuthorActionProcessor
     {
-        private readonly IDbContextFactory<MssqlDbContext> _contextFactory;
+        private readonly IDbContextFactory<ApplicationDbContext> _contextFactory;
 
-        public DefaultAuthorActionProcessor(IDbContextFactory<MssqlDbContext> contextFactory)
+        public DefaultAuthorActionProcessor(IDbContextFactory<ApplicationDbContext> contextFactory)
         {
             _contextFactory = contextFactory;
         }
