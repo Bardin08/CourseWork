@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
+using CourseWork.Data.Abstractions;
+using CourseWork.Data.Strategies.BookSearchingStrategies;
 using CourseWork.Shared.Dtos;
-using CourseWork.LogicLayer.Abstractions;
-using CourseWork.LogicLayer.Strategies.BookSearchingStrategies;
 
-namespace CourseWork.LogicLayer.Factories
+namespace CourseWork.Data.Factories
 {
     internal class DefaultBookSearchingStrategyFactory : IBookSearchingStrategyFactory
     {

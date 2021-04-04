@@ -1,5 +1,4 @@
 ﻿using CourseWork.LogicLayer.Abstractions;
-using CourseWork.LogicLayer.Factories;
 using CourseWork.LogicLayer.Processors;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,7 +10,6 @@ namespace CourseWork.LogicLayer
         {
             serviceCollection.AddScoped<IBookActionProcessor, DefaultBookActionProcessor>();
             serviceCollection.AddScoped<IAuthorActionProcessor, DefaultAuthorActionProcessor>();
-            serviceCollection.AddScoped<IBookSearchingStrategyFactory, DefaultBookSearchingStrategyFactory>();
         }
     }
 }

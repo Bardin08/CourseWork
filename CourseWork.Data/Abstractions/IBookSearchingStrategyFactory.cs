@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using CourseWork.Shared.Dtos;
 
-namespace CourseWork.LogicLayer.Abstractions
+namespace CourseWork.Data.Abstractions
 {
     public interface IBookSearchingStrategyFactory
     {

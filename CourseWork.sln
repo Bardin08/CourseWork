@@ -16,6 +16,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CourseWork.LogicLayer", "Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseWork.Configuration", "CourseWork.Configuration\CourseWork.Configuration.csproj", "{E9DD7B11-14A0-44F6-9A2E-9A4D8F2897FF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{82172794-E6B6-4C87-B331-F64C43D4E614}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +50,12 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {50F737CE-8A50-49F0-8503-2889A3F8473C}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E9DD7B11-14A0-44F6-9A2E-9A4D8F2897FF} = {82172794-E6B6-4C87-B331-F64C43D4E614}
+		{6969C71E-DD8F-4E58-8C92-349687CCB091} = {82172794-E6B6-4C87-B331-F64C43D4E614}
+		{188F9DC4-17DE-45F3-A38B-706D876174BA} = {82172794-E6B6-4C87-B331-F64C43D4E614}
+		{2E8E7AA7-E566-4017-968D-D00A4E3D5F85} = {82172794-E6B6-4C87-B331-F64C43D4E614}
+		{3BA348F2-C549-4E8F-9989-E0D3BEA5E1DC} = {82172794-E6B6-4C87-B331-F64C43D4E614}
 	EndGlobalSection
 EndGlobal

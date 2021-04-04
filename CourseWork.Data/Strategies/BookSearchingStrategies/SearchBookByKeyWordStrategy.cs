@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CourseWork.Data.Abstractions;
 using CourseWork.Shared.Dtos;
 using CourseWork.Shared.Models;
 
-namespace CourseWork.LogicLayer.Strategies.BookSearchingStrategies
+namespace CourseWork.Data.Strategies.BookSearchingStrategies
 {
-    internal sealed class SearchBookByKeyWordStrategy : Abstractions.IBookSearchingStrategy
+    internal sealed class SearchBookByKeyWordStrategy : IBookSearchingStrategy
     {
         public IQueryable<BookModel> Execute(IQueryable<BookModel> books, BookSearchingDto bookSearchingDto)
         {

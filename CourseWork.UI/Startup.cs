@@ -23,13 +23,11 @@ namespace CourseWork.UI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDataAccessLayer(Configuration);
-            services.AddLogicLayer();
+            services.AddApplicationDependencies(Configuration);
             
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
-            services.AddIdentity();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             
             services.AddAuthorization(config =>

@@ -2,7 +2,7 @@
 using CourseWork.Shared.Dtos;
 using CourseWork.Shared.Models;
 
-namespace CourseWork.LogicLayer.Abstractions
+namespace CourseWork.Data.Abstractions
 {
     public interface IBookSearchingStrategy
     {
